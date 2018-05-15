@@ -108,7 +108,7 @@ $(document).ready(function(){
     $("#vote-final").click(function() {
       if ($("#yay").prop("checked")) {
         if (confirm("Are you sure you want to vote YES on this bill")) {
-            contractInstance.castVote(billID, true, {gasPrice: 1e10}, function(err, result) {
+            contractInstance.castVote(web3.eth.accounts[0], billID, true, {gasPrice: 1e10}, function(err, result) {
               if (!err) {
                 console.log("Voting");
                 window.location.replace("http://blockreferendum.com/html/voting.html?bill=" + billID + "&vote=" + numVotes);
@@ -121,12 +121,9 @@ $(document).ready(function(){
         }
       }
 
-      else if ($("#nay").prop("checked")) {
+      if ($("#nay").prop("checked")) {
         if (confirm("Are you sure you want to vote NO on this bill")) {
-          $("#vote-final").click(function() {
-            if ($("#nay").prop("checked")) {
-              if (confirm("Are you sure you want to vote NO on this bill")) {
-                  contractInstance.castVote(billID, false, {gasPrice: 1e10}, function(err, result) {
+                  contractInstance.castVote(web3.eth.accounts[0], billID, false, {gasPrice: 1e10}, function(err, result) {
                     if (!err) {
                       console.log("Voting");
                       window.location.replace("http://blockreferendum.com/html/voting.html?bill=" + billID + "&vote=" + numVotes);
@@ -139,11 +136,9 @@ $(document).ready(function(){
                 }
               }
           });
-        }
-      }
     });
   })
-})
+
 
 function getBillDataJSON(bill) {
   $.ajax({
