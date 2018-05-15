@@ -1,7 +1,6 @@
-function billSearch() {
-  var searcher = window.location.search;
-  var spot = searcher.indexOf("=");
-  return searcher.substring(spot + 1);
+function infoSearch(check) {
+  var spot = check.indexOf("=");
+  return check.substring(spot + 1);
 }
 
 window.addEventListener('load', function() {
@@ -20,25 +19,55 @@ $(document).ready(function(){
   var MyContract = web3.eth.contract(abi);
   var contractInstance = MyContract.at(contractAddress);
 
-  var billInfo = billSearch().split("-");
+  var billInfo = window.location.search.split("&");
+  var voteInfo = infoSearch(billInfo[1]);
   var vote;
-  if (billInfo[0] == "true"){
+  if (voteInfo == "true"){
     vote = true;
   }
   else {
     vote = false;
   }
 
-  var billID = billInfo[1] + "-" + billInfo[2];
+  // Load in billID
+  var billID = infoSearch(billInfo[0]);
 
-  contractInstance.castVote(web3.eth.accounts[0], billID, vote, {gasPrice: 1e10}, function(err, result) {
-    if (!err) {
-      console.log("Casting ballot");
-      window.location.replace("http://www.blockreferendum.com/html/voting.html?bill=" + billID);
+  var numVotes;
+
+  // Find number of votes before passing in
+  contractInstance.getVotes(billID, function(err, result) {
+    if (result != null) {
+      numVotes = result;
     }
     else {
-      alert("Unable to cast ballot. Going back to bills");
-      window.location.replace("http://www.blockreferendum.com/html/bills.html");
+      console.log("Failed to find number of votes");
+      alert("Issue with getVotes function, redirecting");
+      window.location.replace("http://www.blockreferendum.com/html/bill-data.html?bill=" + billID);
     }
-  });
+  })
+
+  if (vote) {
+    contractInstance.castVote(billID, true, {gasPrice: 1e10}, function(err, result) {
+      if (!err) {
+        console.log("Voting");
+        window.location.replace("http://blockreferendum.com/html/voting.html?bill=" + billID + "&num=" + numVotes);
+      }
+      else {
+        alert("Voting failed, please try again");
+        window.location.replace("http://www.blockreferendum.com/html/bill-data.html?bill=" + billID);;
+      }
+    });
+  }
+  else {
+    contractInstance.castVote(billID, false, {gasPrice: 1e10}, function(err, result) {
+      if (!err) {
+        console.log("Voting");
+        window.location.replace("http://blockreferendum.com/html/voting.html?bill=" + billID + "&" + numVotes);
+      }
+      else {
+        alert("Voting failed, please try again");
+        window.location.replace("http://www.blockreferendum.com/html/bill-data.html?bill=" + billID);;
+      }
+    });
+  }
 });

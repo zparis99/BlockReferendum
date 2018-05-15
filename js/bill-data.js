@@ -30,12 +30,55 @@ $(document).ready(function(){
   var billTitle = billInfo[0];
   var billID = billInfo[0] + "-" + billInfo[1];
   console.log(billID);
+
+
+  console.log("Checking bill")
+  contractInstance.isBill(billID, function(err, result) {
+    console.log(result);
+    if (result != null) {
+      if (!result) {
+        contractInstance.newBill(billID, {gasPrice: 1e10}, function(err, result) {
+          if (!err) {
+            console.log("Making bill");
+            window.location.replace("http://blockreferendum.com/html/generating-bill.html?bill=" + billID);
+          }
+
+          else {
+            alert("Could not generate bill, please try again");
+            window.location.replace("http://blockreferendum.com/html/bills.html");
+          }
+        });
+      }
+    }
+    else {
+      alert("Could not generate bill, please try again");
+      window.location.replace("http://blockreferendum.com/html/bills.html");
+    }
+  });
+
+
+  // Load page
   getBillDataJSON(billTitle);
+
+  var numVotes;
+
+  // Find number of votes before passing in
+  contractInstance.getVotes(billID, function(err, result) {
+    if (result != null) {
+      numVotes = result;
+    }
+    else {
+      console.log("Failed to find number of votes");
+      alert("Issue with getVotes function, redirecting");
+      window.location.reload();
+    }
+  });
 
   // Enable/disable button based on check mark
   $("#verify-check").click(function() {
     $("#go-vote").attr("disabled", !$("#verify-check").prop("checked"));
-  })
+  });
+
 
   // Open up voting when ready button clicked
   $("#go-vote").click(function() {
@@ -59,69 +102,42 @@ $(document).ready(function(){
     })
     console.log(billID)
 
+    // Find current number of votes
+
     // When they submit vote go to make sure bill exists then vote
     $("#vote-final").click(function() {
       if ($("#yay").prop("checked")) {
         if (confirm("Are you sure you want to vote YES on this bill")) {
-          contractInstance.isBill(billID, function(err, result) {
-            if (result != null) {
-              if (!result) {
-                contractInstance.newBill(billID, {gasPrice: 1e10}, function(err, result) {
-                  if (!err) {
-                    console.log("Making bill");
-                    window.location.replace("http://blockreferendum.com/html/generating-bill.html?bill=true-" + billID);
-                  }
-                  else {
-                    alert("Could not generate bill, please try again");
-                    window.location.reload();
-                  }
-                });
+            contractInstance.castVote(billID, true, {gasPrice: 1e10}, function(err, result) {
+              if (!err) {
+                console.log("Voting");
+                window.location.replace("http://blockreferendum.com/html/voting.html?bill=" + billID + "&vote=" + numVotes);
               }
               else {
-                contractInstance.castVote(web3.eth.accounts[0], billID, true, {gasPrice: 1e10}, function(err, result) {
-                  if (!err) {
-                    console.log("Voting");
-                    window.location.replace("http://blockreferendum.com/html/voting.html?bill=" + billID);
-                  }
-                  else {
-                    alert("Voting failed, please try again");
-                    window.location.reload();
-                  }
-                });
+                alert("Voting failed, please try again");
+                window.location.reload();
               }
-            }
-          });
+            });
         }
       }
+
       else if ($("#nay").prop("checked")) {
         if (confirm("Are you sure you want to vote NO on this bill")) {
-          contractInstance.isBill(billID, function(err, result) {
-              if (result != null) {
-                if (!result) {
-                  contractInstance.newBill(billID, {gasPrice: 1e10}, function(err, result) {
-                    if (!err) {
-                      console.log("Making bill");
-                      window.location.replace("http://blockreferendum.com/html/generating-bill.html?bill=false-" + billID);
-                    }
-                    else {
-                      alert("Could not generate bill, please try again");
-                      window.location.reload();
-                    }
-                  });
-                }
-                else {
-                  contractInstance.castVote(web3.eth.accounts[0], billID, false, {gasPrice: 1e10}, function(err, result) {
+          $("#vote-final").click(function() {
+            if ($("#nay").prop("checked")) {
+              if (confirm("Are you sure you want to vote NO on this bill")) {
+                  contractInstance.castVote(billID, false, {gasPrice: 1e10}, function(err, result) {
                     if (!err) {
                       console.log("Voting");
-                      window.location.replace("http://blockreferendum.com/html/voting.html?bill=" + billID);
+                      window.location.replace("http://blockreferendum.com/html/voting.html?bill=" + billID + "&vote=" + numVotes);
                     }
                     else {
                       alert("Voting failed, please try again");
                       window.location.reload();
                     }
                   });
+                }
               }
-            }
           });
         }
       }

@@ -20,23 +20,14 @@ $(document).ready(function(){
   var MyContract = web3.eth.contract(abi);
   var contractInstance = MyContract.at(contractAddress);
 
-  var billInfo = billSearch().split("-");
-  var vote;
-  if (billInfo[0] == "true"){
-    vote = true;
-  }
-  else {
-    vote = false;
-  }
-
-  var billID = billInfo[1] + "-" + billInfo[2];
+  var billID = billSearch();
 
   // Check if transaction has passed every second
   setInterval(function() {
     contractInstance.isBill(billID, function(err, result) {
       if (result != null) {
         if (result) {
-          window.location.replace("http://www.blockreferendum.com/html/intermediary.html?=" + vote + billID);
+          window.location.replace("http://www.blockreferendum.com/html/bill-data.html?bill=" + billID);
         }
         else {
           window.location.reload();

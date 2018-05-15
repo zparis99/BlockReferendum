@@ -1,7 +1,6 @@
-function billSearch() {
-  var searcher = window.location.search;
-  var spot = searcher.indexOf("=");
-  return searcher.substring(spot + 1);
+function infoSearch(check) {
+  var spot = check.indexOf("=");
+  return check.substring(spot + 1);
 }
 
 window.addEventListener('load', function() {
@@ -20,19 +19,11 @@ $(document).ready(function(){
   var MyContract = web3.eth.contract(abi);
   var contractInstance = MyContract.at(contractAddress);
 
-  var billID = billSearch();
+  var billInfo = window.location.search.split("&");
   // Store initial number of votes for bill to check against, will have to change later
   // as this will mess up if more people use site
-  var currVotes;
-  contractInstance.getVotes(billID, function(err, result) {
-    if (result != null) {
-      currVotes = result;
-    }
-    else {
-      alert("Could not get current votes. Going back.");
-      window.location.replace("http://www.blockreferendum.com/html/bills.html");
-    }
-  });
+  var billID = infoSearch(billInfo[0]);
+  var currVotes = infoSearch(billInfo[1]);
 
   // Check if transaction has passed every second
   setInterval(function() {
@@ -40,7 +31,7 @@ $(document).ready(function(){
       if (result != null) {
         if (result > currVotes) {
           console.log("Vote cast, going to bills");
-          window.location.replace("http://www.blockreferendum.com/html/bills.html");
+          window.location.replace("http://www.blockreferendum.com/html/bill-data.html?bill=" + billID);
         }
         else {
           window.location.reload();
@@ -48,7 +39,7 @@ $(document).ready(function(){
       }
       else {
         alert("Could not get current votes. Going back.");
-        window.location.replace("http://www.blockreferendum.com/html/bills.html");
+        window.location.replace("http://www.blockreferendum.com/html/bills.html?bill=" + billID);
       }
     });
   }, 1000)

@@ -1,24 +1,16 @@
 // Store contract address
-var contractAddress = "0x1b14753218cf690c80e15d3c4926536b4c2839ba";
+var contractAddress = "0xd84863ca65ef57bf99a0fc075ea27071acabe6ba";
 // Store contract abi
 var abi = [
 	{
 		"constant": false,
 		"inputs": [
 			{
-				"name": "voter",
-				"type": "address"
-			},
-			{
 				"name": "bill_id",
 				"type": "string"
-			},
-			{
-				"name": "vote",
-				"type": "bool"
 			}
 		],
-		"name": "castVote",
+		"name": "newBill",
 		"outputs": [
 			{
 				"name": "",
@@ -30,12 +22,22 @@ var abi = [
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [],
-		"name": "kill",
-		"outputs": [],
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"name": "votesAgainst",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
 		"payable": false,
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -44,9 +46,13 @@ var abi = [
 			{
 				"name": "bill_id",
 				"type": "string"
+			},
+			{
+				"name": "vote",
+				"type": "bool"
 			}
 		],
-		"name": "newBill",
+		"name": "castVote",
 		"outputs": [
 			{
 				"name": "",
@@ -78,23 +84,12 @@ var abi = [
 	},
 	{
 		"constant": false,
-		"inputs": [
-			{
-				"name": "voter",
-				"type": "address"
-			}
-		],
-		"name": "removeVoter",
+		"inputs": [],
+		"name": "kill",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
-	},
-	{
-		"inputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
 	},
 	{
 		"constant": true,
@@ -104,64 +99,7 @@ var abi = [
 				"type": "bytes32"
 			}
 		],
-		"name": "bills",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "bill_id",
-				"type": "string"
-			}
-		],
-		"name": "getVotes",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "bill_id",
-				"type": "string"
-			}
-		],
-		"name": "getVotesAgainst",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "bill_id",
-				"type": "string"
-			}
-		],
-		"name": "getVotesFor",
+		"name": "votesReceived",
 		"outputs": [
 			{
 				"name": "",
@@ -195,15 +133,48 @@ var abi = [
 		"constant": true,
 		"inputs": [
 			{
-				"name": "check",
-				"type": "address"
+				"name": "bill_id",
+				"type": "string"
 			}
 		],
-		"name": "isVoter",
+		"name": "getVotes",
 		"outputs": [
 			{
 				"name": "",
-				"type": "bool"
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "voter",
+				"type": "address"
+			}
+		],
+		"name": "removeVoter",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"name": "votesFor",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -233,11 +204,11 @@ var abi = [
 		"constant": true,
 		"inputs": [
 			{
-				"name": "",
-				"type": "bytes32"
+				"name": "bill_id",
+				"type": "string"
 			}
 		],
-		"name": "votesAgainst",
+		"name": "getVotesAgainst",
 		"outputs": [
 			{
 				"name": "",
@@ -256,7 +227,45 @@ var abi = [
 				"type": "bytes32"
 			}
 		],
-		"name": "votesFor",
+		"name": "bills",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "check",
+				"type": "address"
+			}
+		],
+		"name": "isVoter",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "bill_id",
+				"type": "string"
+			}
+		],
+		"name": "getVotesFor",
 		"outputs": [
 			{
 				"name": "",
@@ -268,22 +277,9 @@ var abi = [
 		"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "bytes32"
-			}
-		],
-		"name": "votesReceived",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"inputs": [],
 		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
+		"stateMutability": "nonpayable",
+		"type": "constructor"
 	}
 ];
