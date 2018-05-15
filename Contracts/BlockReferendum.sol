@@ -65,9 +65,9 @@ contract BlockVote {
 
     // Casts a user's vote
     function castVote(address voter, string bill_id, bool vote) public returns(bool){
-        assert(isBill(bill_id));
-        assert(isVoter(voter));
         bytes32 billID = toBytes32(bill_id);
+        assert(bills[billID]);
+        assert(voters[voter]);
         if (vote)
             votesFor[billID]++;
         else
