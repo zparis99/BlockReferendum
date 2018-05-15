@@ -1,5 +1,5 @@
 // Store contract address
-var contractAddress = "0xbff75acfd727e15726e6747d0c5a1a159df8008b";
+var contractAddress = "0x1b14753218cf690c80e15d3c4926536b4c2839ba";
 // Store contract abi
 var abi = [
 	{
