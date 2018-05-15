@@ -1,0 +1,23 @@
+{
+  "name": "DDAfinal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "rpc": "ganache-cli",
+    "http": "http-server",
+    "hint": "jshint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "web3": "^0.20.6"
+  },
+  "devDependencies": {
+    "ganache-cli": "^6.1.0",
+    "http-server": "^0.11.1",
+    "jshint": "^2.9.5"
+  }
+}

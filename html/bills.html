@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link rel="stylesheet" href="./../css/index.css" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="http://www.blockreferendum.com/node_modules/web3/dist/web3.min.js"></script>
+  <script src="http://www.blockreferendum.com/js/globalvars.js"></script>
+  <script src="http://www.blockreferendum.com/js/bills.js"></script>
+  <script src="http://www.blockreferendum.com/js/home-button.js"></script>
+  <Title>Voting Booth</title>
+</head>
+<body class="font-weight-normal">
+  <div class="home">
+      <button type="submit" class="btn btn-primary-sm">Home</button>
+  </div>
+  <div class="overlay">
+    <div class="main">
+      <div class="text-center">
+        <h4>How to Vote:</h4> <br />
+        <p>Now that you are registered you can scroll down to view the list of active bills in congress.<br>
+          Click on a bill's number to view more in depth information and to vote on that bill.<br>
+          You should be able to see 20 bills/page and if you scroll to the bottom the next button will let you see the next 20.<br>
+          If the bottom fails to load, refresh the page and it should come back.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="white-back">
+    <div id="bills">
+    </div>
+    <div class="text-center">
+      <button id="previous" class="btn btn-outline-dark btn-sm" disabled="disabled">Previous</button>
+      <button id="next" class="btn btn-outline-dark btn-sm">Next</button>
+    </div>
+  </div>
+</body>

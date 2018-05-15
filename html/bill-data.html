@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link rel="stylesheet" href="./../css/index.css" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="http://blockreferendum.com/node_modules/web3/dist/web3.min.js"></script>
+  <script src="http://blockreferendum.com/js/globalvars.js"></script>
+  <script src="http://blockreferendum.com/js/bill-data.js"></script>
+  <script src="http://www.blockreferendum.com/js/home-button.js"></script>
+</head>
+<body>
+  <div class="home">
+      <button type="submit" class="btn btn-primary-sm">Home</button>
+  </div>
+  <div id="senate" class="white-text">
+    <div class="overlay">
+      <div class="container">
+        <div id="header" class="page-header text-center"></div>
+      </div>
+      <div class="container">
+        <div id="title"></div>
+      </div>
+      <div class="container">
+        <div id="primary-subject"></div>
+      </div>
+      <div class="container">
+        <div id="total-votes"></div>
+      </div>
+      <div class="container">
+        <div id="votes-for"></div>
+      </div>
+      <div class="container">
+        <div id="votes-against"></div>
+      </div>
+      <div class="container">
+        <div id="purpose"></div>
+      </div>
+      <div class="container">
+        <div id="summary"></div>
+      </div>
+      <div class="container">
+        <div id="sponsor"></div>
+      </div>
+      <div class="container">
+        <div id="date"></div>
+      </div>
+      <div class="container">
+        <div id="committee"></div>
+      </div>
+      <div class="container">
+        <div id="senate-passage"><h3>Senate Passage</h3><hr class="white"></div>
+      </div>
+      <div class="container">
+        <div id="house-passage"><h3>House Passage</h3><hr class="white"></div>
+      </div>
+      <div class="container">
+        <div id="last-major-action"></div>
+      </div>
+      <div class="container">
+        <div id="bill-url"></div><hr>
+      </div>
+      <div class="container" id="pre-vote">
+        <p>Please go over the information above until you feel that you understand what the bill is aiming to do.</p>
+        <p>If you feel ready to vote, click the checkbox below and move on to vote.</p>
+        <hr class="white">
+      </div>
+      <div class="container">
+        <ul class="list-inline" id="voting-list">
+          <li class="list-inline-item"><input class="form-check form-check-inline" type="checkbox" id="verify-check"></li>
+          <li class="list-inline-item"><label id="verify-check" class="form-check-label" for="verify-check">Check when you are ready to vote</label></li>
+          <li class="list-inline-item shift-right">
+            <button id="go-vote" type="submit" class="btn btn-default list-inline-item" disabled="disabled">Ready</button>
+          </li>
+        </ul>
+    </div>
+    <div class="container" id="voting-options">
+    </div>
+    <div class="container" id="vote-button">
+    </div>
+</body>

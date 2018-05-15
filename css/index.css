@@ -1,0 +1,129 @@
+body, html{
+  height: 100%;
+}
+
+.main::before{
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -2;
+
+  display: block;
+  background-image: url("./../images/capitol.jpg");
+  width: 100%;
+  height: 100%;
+  /* Get some cool parallax scrolling */
+  background-attachment: fixed;
+
+  /* Fill screen and blur picture */
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+.main{
+  /* Put text up fron */
+  z-index: 1;
+  color: white;
+  height: 100%;
+}
+
+.overlay{
+  height: 100%;
+}
+
+/* Dark overlay to improve text readability */
+.overlay::before {
+  content: "";
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background-attachment: fixed;
+  position: fixed;
+  z-index: -1;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 30%
+}
+
+#bills {
+  background-color: white;
+}
+
+.form-group mx-sm-3 mb-2 {
+  width: 400px;
+}
+
+.wide {
+  width: 100%;
+}
+
+.white-back {
+  background-color: white;
+}
+
+.home {
+  top: 24px;
+  left: 24px;
+  position: absolute;
+  color: black;
+}
+
+.white-text {
+  color: white;
+}
+
+#senate::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -2;
+
+  display: block;
+  background-image: url("./../images/senate.jpg");
+  width: 110%;
+  height: 110%;
+  /* Get some cool parallax scrolling */
+  background-attachment: fixed;
+
+  /* Fill screen and blur picture */
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+hr.white {
+  border-color: white;
+}
+
+#go-vote {
+  position: relative;
+  left: 100px;
+}
+
+.shift-right {
+  position: relative;
+  left: 100px;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.float-right  {
+  float: right;
+}
